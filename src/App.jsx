@@ -6,7 +6,7 @@ import { CORE_CONCEPTS, EXAMPLES } from './data.js';
 import { useState } from 'react';
 
 function App() {
-  const [ selectedMessage, setSelectedMessage ] = useState("components");
+  const [ selectedMessage, setSelectedMessage ] = useState();
 
   function handleSelect(selectedButton) {
     setSelectedMessage(selectedButton);
@@ -15,6 +15,7 @@ function App() {
   return (
     <div>
       <Header />
+
       <main>
         <section id='core-concepts'>
           <h2>Core Concepts</h2>
@@ -35,29 +36,54 @@ function App() {
             <CoreConcept {...CORE_CONCEPTS[3]} />
           </ul>
         </section>
+        
         <section id='examples'>
             <h2>Examples</h2>
 
             <menu>
-              <TabButton onSelect={()=>handleSelect("components")}>Components</TabButton>
-              <TabButton onSelect={()=>handleSelect("jsx")}>JSX</TabButton>
-              <TabButton onSelect={()=>handleSelect("props")}>Props</TabButton>
-              <TabButton onSelect={()=>handleSelect("state")}>State</TabButton>
+              <TabButton 
+                isSelected={selectedMessage === "components"}  
+                onSelect={()=> handleSelect("components")}
+              >
+                Components
+              </TabButton>
+
+              <TabButton 
+                isSelected={selectedMessage === "jsx"} 
+                onSelect={()=> handleSelect("jsx")}
+              >
+                JSX
+              </TabButton>
+
+              <TabButton 
+                isSelected={selectedMessage === "props"} 
+                onSelect={()=> handleSelect("props")}
+              >
+                Props
+              </TabButton>
+              
+              <TabButton 
+                isSelected={selectedMessage === "state"} 
+                onSelect={()=> handleSelect("state")}
+              >
+                State
+              </TabButton>
             </menu>
 
-            <div id="tab-content">
-              <h3>
-                {EXAMPLES[selectedMessage].title}
-              </h3>
-              <p>
-                {EXAMPLES[selectedMessage].description}
-              </p>
-              <pre>
-                <code>
-                  {EXAMPLES[selectedMessage].code}
-                </code>
-              </pre>
-            </div>
+              {!selectedMessage ? (
+                <div id="tab-content">
+                  <p>Please select a topic above</p>
+                </div>
+                ) : (
+                <div id="tab-content">
+                  <h3>{EXAMPLES[selectedMessage].title}</h3>
+                  <p>{EXAMPLES[selectedMessage].description}</p>
+                  <pre>
+                    <code>{EXAMPLES[selectedMessage].code}</code>
+                  </pre>
+                </div>
+                )
+              }
         </section>
       </main>
     </div>
