@@ -4,6 +4,7 @@ import { EXAMPLES } from "../../data.js";
 
 import TabButton from "../TabButton/TabButton.jsx";
 import Section from "../Section/Section.jsx";
+import Tabs from "../Tabs/Tabs.jsx";
 
 export default function Examples() {
     const [ selectedMessage, setSelectedMessage ] = useState();
@@ -14,7 +15,10 @@ export default function Examples() {
   
     return (
         <Section title="Examples" id='examples'>
-            <menu>
+          <Tabs 
+            WrapperContainer="menu"
+            buttons={
+            <>
               <TabButton 
                 isSelected={selectedMessage === "components"}  
                 onClick={()=> handleSelect("components")}
@@ -42,22 +46,25 @@ export default function Examples() {
               >
                 State
               </TabButton>
-            </menu>
+            </>
+            }
+          >
 
-              {!selectedMessage ? (
-                <div id="tab-content">
-                  <p>Please select a topic above</p>
-                </div>
-                ) : (
-                <div id="tab-content">
-                  <h3>{EXAMPLES[selectedMessage].title}</h3>
-                  <p>{EXAMPLES[selectedMessage].description}</p>
-                  <pre>
-                    <code>{EXAMPLES[selectedMessage].code}</code>
-                  </pre>
-                </div>
-                )
-              }
+            {!selectedMessage ? (
+              <div id="tab-content">
+                <p>Please select a topic above</p>
+              </div>
+              ) : (
+              <div id="tab-content">
+                <h3>{EXAMPLES[selectedMessage].title}</h3>
+                <p>{EXAMPLES[selectedMessage].description}</p>
+                <pre>
+                  <code>{EXAMPLES[selectedMessage].code}</code>
+                </pre>
+              </div>
+              )
+            }
+          </Tabs>
         </Section>
     )
 }
